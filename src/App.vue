@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     data() {
@@ -143,10 +142,14 @@ export default {
     computed: {
         currMatchday() {
             let currMatchday = [];
-            for (let item in this.fixtures.fixtures) {
-                console.log(item);
-                if(this.fixtures.fixtures.matchday === this.league.currentMatchday) {
-                    currMatchday.push(this.fixtures.fixtures);
+
+            if (typeof this.fixtures.fixtures == 'undefined') {
+                return currMatchday;
+            }
+
+            for (let i = 0; i < this.fixtures.fixtures.length; i++) {
+                if(this.fixtures.fixtures[i].matchday === this.league.currentMatchday) {
+                    currMatchday.push(this.fixtures.fixtures[i]);
                 }
             }
             return currMatchday;
