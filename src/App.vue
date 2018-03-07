@@ -32,22 +32,29 @@
                     </v-flex>
                 </v-layout>
                 <v-layout>
-                    <v-flex><h3>{{ league.caption }}</h3></v-flex>
+                    <v-flex text-md-center my-3><h3>{{ league.caption }}</h3></v-flex>
                 </v-layout>
-                <v-layout>
-                    <h4>Fixtures:</h4>
-                </v-layout>
-                <v-layout>
+                <v-layout elevation-4 wrap grey darken-3 my-5 px-2>
                     <v-flex md12>
-                        <ul>
-                            <li v-for="item in currMatchday">{{ item.matchday }}: {{ item.homeTeamName }} {{ item.result.goalsHomeTeam }} vs {{ item.result.goalsAwayTeam }} {{ item.awayTeamName }}</li>
-                        </ul>
+                        <h4 md12 text-md-center>Gameweek {{ league.currentMatchday }}</h4>
+                    </v-flex>
+                    <v-flex md12 text-md-center>
+                        <table>
+                            <tbody>
+                                <tr v-for="item in currMatchday">
+                                    <td>{{ item.homeTeamName }}</td>
+                                    <td><img :src="item.homeTeamCrest"  style="width: 30px;"></td>
+                                    <td>{{ item.result.goalsHomeTeam }}</td>
+                                    <td>:</td>
+                                    <td>{{ item.result.goalsAwayTeam }}</td>
+                                    <td><img :src="item.awayTeamCrest" style="width: 30px;"></td>
+                                    <td>{{ item.awayTeamName }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </v-flex>
                 </v-layout>
-                <v-layout>
-                    <h4>Table:</h4>
-                </v-layout>
-                <v-layout>
+                <v-layout elevation-4 grey darken-3 my-5 px-2>
                     <v-flex md12>
                         <table>
                             <thead>
@@ -132,39 +139,106 @@ export default {
             .then(response => response.json())
             .then(json => this.table = json)
         },
-        fetchLeagueTeams() {
-            fetch('http://api.football-data.org/v1/competitions/445/teams', {method: 'GET', headers: {'X-Auth-Token': this.apiKey}})
-            .then(response => response.json())
-            .then(json => this.table = json)
-        }
+        // fetchLeagueTeams() {
+        //     fetch('http://api.football-data.org/v1/competitions/445/teams', {method: 'GET', headers: {'X-Auth-Token': this.apiKey}})
+        //     .then(response => response.json())
+        //     .then(json => this.teams = json)
+        // }
 
     },
     computed: {
         currMatchday() {
             let currMatchday = [];
-
-            if (typeof this.fixtures.fixtures == 'undefined') {
+            let fixtures = this.fixtures.fixtures;
+            let apiKey = this.apiKey;
+            if (typeof fixtures == 'undefined') {
                 return currMatchday;
             }
 
             for (let i = 0; i < this.fixtures.fixtures.length; i++) {
-                if(this.fixtures.fixtures[i].matchday === this.league.currentMatchday) {
-                    currMatchday.push(this.fixtures.fixtures[i]);
+                if(fixtures[i].matchday === this.league.currentMatchday) {
+                    // let getHomeTeamCrest = new Promise(function(resolve, reject) {
+                    //     return fetch(fixtures[i]._links.homeTeam.href, {method: 'GET', headers: {'X-Auth-Token': apiKey}})
+                    //     .then(response => response.json())
+                    //     .then(function(json) {
+                    //         fixtures[i].homeTeamCrest = json.crestUrl;
+                    //         console.log('homeTeamCrest');
+                    //         resolve(fixtures[i]);
+                    //     });
+                    // });
+                    // let getAwayTeamCrest = new Promise(function(resolve, reject) {
+                    //     return fetch(fixtures[i]._links.awayTeam.href, {method: 'GET', headers: {'X-Auth-Token': apiKey}})
+                    //     .then(response => response.json())
+                    //     .then(function(json) {
+                    //         fixtures[i].awayTeamCrest = json.crestUrl;
+                    //         console.log('awayTeamCrest');
+                    //         resolve(fixtures[i]);
+                    //     });
+                    // });
+                    function getHomeTeamCrest (){
+                        return new Promise(function(resolve, reject) {
+                            fetch(fixtures[i]._links.homeTeam.href, {method: 'GET', headers: {'X-Auth-Token': apiKey}})
+                        })
+                        .then(response => response.json())
+                        .then(function(json) {
+                            fixtures[i].homeTeamCrest = json.crestUrl;
+                            console.log('homeTeamCrest');
+                            Promise.resolve(fixtures[i]);
+                        });
+                    };
+                    function getAwayTeamCrest (){
+                        return new Promise(function(resolve, reject) {
+                            fetch(fixtures[i]._links.awayTeam.href, {method: 'GET', headers: {'X-Auth-Token': apiKey}})
+                        })
+                        .then(response => response.json())
+                        .then(function(json) {
+                            fixtures[i].awayTeamCrest = json.crestUrl;
+                            console.log('awayTeamCrest');
+                            Promise.resolve(fixtures[i]);
+                        });
+                    };
+                    Promise.all([getHomeTeamCrest(), getAwayTeamCrest()])
+                    .then(function (values) {
+                        console.log(values);
+                        currMatchday.push(fixtures[i]);
+                        console.log(currMatchday);
+                        return currMatchday;
+                    })
                 }
             }
-            return currMatchday;
         }
     },
     created() {
         this.fetchLeague();
         this.fetchLeagueFixtures();
         this.fetchLeagueTable();
-        this.fetchLeagueTeams();
+        // this.fetchLeagueTeams();
     }
 }
 </script>
 
 <style lang="scss">
+* {
+    font-family: 'Exo 2', 'Roboto', sans-serif;
+}
+
+h1 {
+    font-family: 'Audiowide', cursive;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin: 20px 0;
+    font-size: 40px;
+}
+
+h3 {
+    font-family: 'Audiowide', cursive;
+    font-size: 24px;
+}
+
+h4 {
+    width: 100%;
+    text-align: center;
+}
 
 .flagSelect{
     .flex {
@@ -183,7 +257,8 @@ export default {
 }
 table {
     width: 100%;
-    margin-bottom: 100px;
+    border-bottom: 0 solid #777;
+    border-collapse: collapse;
 
     tr {
         border-bottom: 1px solid #777;
@@ -196,7 +271,14 @@ table {
             padding: 10px 0;
         }
     }
+
+        tr:last-of-type,
+        tr:last-of-type td {
+            border-bottom: none !important;
+        }
+
 }
+
 img{
     width: 100%;
 }
