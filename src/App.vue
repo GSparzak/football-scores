@@ -178,30 +178,29 @@ export default {
                     function getHomeTeamCrest (){
                         return new Promise(function(resolve, reject) {
                             fetch(fixtures[i]._links.homeTeam.href, {method: 'GET', headers: {'X-Auth-Token': apiKey}})
+                            .then(response => response.json())
+                            .then(function(json) {
+                                fixtures[i].homeTeamCrest = json.crestUrl;
+                                return fixtures[i];
+                            })
+                            .then(function (response) {resolve(response)});
                         })
-                        .then(response => response.json())
-                        .then(function(json) {
-                            fixtures[i].homeTeamCrest = json.crestUrl;
-                            console.log('homeTeamCrest');
-                            Promise.resolve(fixtures[i]);
-                        });
                     };
                     function getAwayTeamCrest (){
                         return new Promise(function(resolve, reject) {
                             fetch(fixtures[i]._links.awayTeam.href, {method: 'GET', headers: {'X-Auth-Token': apiKey}})
-                        })
-                        .then(response => response.json())
-                        .then(function(json) {
-                            fixtures[i].awayTeamCrest = json.crestUrl;
-                            console.log('awayTeamCrest');
-                            Promise.resolve(fixtures[i]);
+                            .then(response => response.json())
+                            .then(function(json) {
+                                fixtures[i].awayTeamCrest = json.crestUrl;
+                                return fixtures[i];
+                            })
+                            .then(function (response) {resolve(response)});
                         });
                     };
                     Promise.all([getHomeTeamCrest(), getAwayTeamCrest()])
                     .then(function (values) {
                         console.log(values);
                         currMatchday.push(fixtures[i]);
-                        console.log(currMatchday);
                         return currMatchday;
                     })
                 }
