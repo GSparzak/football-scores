@@ -18,6 +18,18 @@ export default {
             .then(response => response.json())
             .then(json => this.teams = json)
         }
+        //     sortedTeams(array) {
+        //         let teams = this.teams.teams;
+        //         console.log(teams);
+        //         var compare = function(a,b) {
+        //             if (a.name < b.name)
+        //                 return -1;
+        //             if (a.name > b.name)
+        //                 return 1;
+        //             return 0;
+        //         }
+        //         teams.sort(compare);
+        //     }
     },
     created() {
         this.fetchLeagueTeams();

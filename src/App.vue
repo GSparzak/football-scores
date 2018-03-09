@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="" id="app">
+    <div class="app" id="app">
         <app-header></app-header>
         <app-league></app-league>
         <app-footer></app-footer>
@@ -30,6 +30,10 @@ export default {
 
 body {
     background-color: #323232;
+}
+
+.app {
+    padding-bottom: 60px;
 }
 
 h1 {
@@ -89,7 +93,7 @@ a:visited {
 a:hover,
 a:active,
 a:focus {
-    color: #f00;
+    color: #D50000;
     text-decoration: none;
 }
 
