@@ -1,0 +1,13 @@
+{
+     "crest": "https://upload.wikimedia.org/wikipedia/de/d/da/Manchester_United_FC.svg",
+     "name": "Manchester United F.C.",
+     "estDate": 1982,
+     "stadium": "Old Trafford",
+     "stadiumCapacity": 75000,
+     "squad": {
+         "goalkeepers": ["David de Gea", "Sergio Romero", "Joel Pereira", "Sam Johnstone"],
+         "defenders": ["Chris Smalling"," Phil Jones", "Marcos Rojo", "Antonio Valencia", "Victor Lindelof", "Eric Bailly", "Luke Shaw", "Daley Blind", "Matteo Darmian"],
+         "midfielders": ["Paul Pogba", "Juan Mata", "Jesse Lingard", "Ashley Young", "Nemanja Matic", "Michael Carrick", "Scott McTomminay", "Ander Herrera", "Marouane Fellaini"],
+         "forwards": ["Romelu Lukaku", "Zlatan Ibrahimovich", "Alexis Sanchez", "Anthony Martial", "Marcus Rashford"]
+ }
+}
