@@ -73,7 +73,9 @@ export default {
 
 <style lang="scss">
     .fixtures {
-        min-width: 920px;
+        max-width: 920px;
+        flex-grow: 1;
+        margin-right: 100px;
 
         .fixtures-header {
             display: flex;
@@ -86,6 +88,7 @@ export default {
         }
 
         table {
+            overflow: hidden;
 
             tr:hover {
                 background-color: #777;

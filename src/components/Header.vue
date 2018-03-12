@@ -9,10 +9,19 @@
                     <img src="/images/pl_white.png" alt="">
                 </a>
                 <a href="#">
+                    <img src="/images/la_liga_logo.png" alt="">
+                </a>
+                <a href="#">
+                    <img src="/images/serie-a-logo.png" alt="">
+                </a>
+                <a href="#">
                     <img src="/images/ligue1_logo.png" alt="">
                 </a>
                 <a href="#">
                     <img src="/images/Bundesliga_Logo.png" alt="">
+                </a>
+                <a href="#">
+                    <img src="/images/Primeira_Liga_Logo.png" alt="">
                 </a>
                 <a href="#">
                     <img src="/images/eredivisie_logo.png" alt="">

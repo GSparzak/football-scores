@@ -63,19 +63,24 @@ export default {
 <style lang="scss">
 
 .leaguePage {
-    padding: 20px 100px;display: flex;
+    padding: 20px 100px;
+    display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: flex-end;
 
     h3 {
         margin-bottom: 60px;
     }
 
     .league-table-short {
-        width: 400px;
+        width: 320px;
 
         td, th {
             padding: 5px 0;
+
+
+                font-size: 14px;
+
         }
     }
 }

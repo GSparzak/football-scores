@@ -30,6 +30,7 @@ export default {
 
 body {
     background-color: #323232;
+    background: url('/images/dark_fish_skin.png')  repeat;
 }
 
 .app {
